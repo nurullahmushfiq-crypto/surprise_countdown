@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,13 +6,11 @@
     <title>Server Crashed</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&amp;family=VT323&amp;display=swap');
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
         body {
             background: #000;
             color: #00ff41;
@@ -24,7 +21,6 @@
             align-items: center;
             justify-content: center;
         }
-
         #matrix {
             position: fixed;
             top: 0;
@@ -32,30 +28,26 @@
             z-index: 1;
             opacity: 0.15;
         }
-
         .content {
             position: relative;
             z-index: 2;
             text-align: center;
         }
-
         .crash-text {
-            font-size: 7.5rem;
+            font-size: 4.8rem;
             font-weight: 700;
             letter-spacing: -6px;
             line-height: 0.85;
             color: #00ff41;
-            text-shadow: 
+            text-shadow:
                 0 0 10px #00ff41,
                 0 0 20px #00ff41,
                 0 0 40px #00ff41;
             text-align: center;
         }
-
         .crash-text span {
             display: block;
         }
-
         .scanline {
             position: fixed;
             top: 0;
@@ -72,7 +64,6 @@
             z-index: 3;
             animation: scan 4s linear infinite;
         }
-
         @keyframes scan {
             0% { transform: translateY(-100%); }
             100% { transform: translateY(100%); }
@@ -82,7 +73,6 @@
 <body>
     <!-- Matrix Background (Binary Rain) -->
     <canvas id="matrix"></canvas>
-
     <!-- Main Content -->
     <div class="content">
         <h1 class="crash-text">
@@ -90,46 +80,37 @@
             <span>CRASHED</span>
         </h1>
     </div>
-
     <!-- Scanlines -->
     <div class="scanline"></div>
-
     <script>
         // Binary Matrix Rain Effect
         const canvas = document.getElementById('matrix');
         const ctx = canvas.getContext('2d');
-
         function resizeCanvas() {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
         }
         resizeCanvas();
         window.addEventListener('resize', resizeCanvas);
-
         // Only binary characters: 0 and 1
         const chars = '01';
         const fontSize = 16;
         let columns = Math.floor(canvas.width / fontSize);
         let drops = Array(columns).fill(1);
-
         function drawMatrix() {
             ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
-
             ctx.fillStyle = '#00ff41';
             ctx.font = fontSize + 'px VT323, monospace';
-
             for (let i = 0; i < drops.length; i++) {
                 const text = chars[Math.floor(Math.random() * chars.length)];
                 ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
                 if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
                     drops[i] = 0;
                 }
                 drops[i]++;
             }
         }
-
         setInterval(drawMatrix, 50);
     </script>
 </body>
