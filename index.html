@@ -2,304 +2,135 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Server Crashed</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&amp;family=VT323&amp;display=swap');
 
-<title>🎁 Something Special is Coming...</title>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+        body {
+            background: #000;
+            color: #00ff41;
+            font-family: 'Space Grotesk', system_ui, sans-serif;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-<style>
+        #matrix {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            opacity: 0.15;
+        }
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
+        .content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
 
-body{
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    overflow:hidden;
-    font-family:'Poppins',sans-serif;
+        .crash-text {
+            font-size: 7.5rem;
+            font-weight: 700;
+            letter-spacing: -6px;
+            line-height: 0.85;
+            color: #00ff41;
+            text-shadow: 
+                0 0 10px #00ff41,
+                0 0 20px #00ff41,
+                0 0 40px #00ff41;
+            text-align: center;
+        }
 
-    background:
-    radial-gradient(circle at top,#1d1d3a,#0b0b15,#000);
-}
+        .crash-text span {
+            display: block;
+        }
 
-/* Animated Stars */
-body::before{
-    content:'';
-    position:absolute;
-    width:200%;
-    height:200%;
+        .scanline {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                to bottom,
+                transparent 50%,
+                rgba(0, 255, 65, 0.03) 51%
+            );
+            background-size: 100% 6px;
+            pointer-events: none;
+            z-index: 3;
+            animation: scan 4s linear infinite;
+        }
 
-    background-image:
-    radial-gradient(white 1px, transparent 1px);
-
-    background-size:40px 40px;
-
-    opacity:.25;
-
-    animation:starsMove 70s linear infinite;
-}
-
-@keyframes starsMove{
-    from{
-        transform:translateY(0);
-    }
-    to{
-        transform:translateY(-700px);
-    }
-}
-
-/* Floating Glow */
-.glow{
-    position:absolute;
-    width:500px;
-    height:500px;
-
-    background:#00e5ff;
-
-    border-radius:50%;
-
-    filter:blur(180px);
-
-    opacity:.12;
-
-    animation:floatGlow 8s ease-in-out infinite;
-}
-
-@keyframes floatGlow{
-    0%,100%{
-        transform:translateY(0);
-    }
-    50%{
-        transform:translateY(-50px);
-    }
-}
-
-.container{
-    position:relative;
-    z-index:2;
-
-    width:90%;
-    max-width:800px;
-
-    text-align:center;
-
-    padding:60px;
-
-    border-radius:30px;
-
-    background:rgba(255,255,255,.05);
-
-    backdrop-filter:blur(20px);
-
-    border:1px solid rgba(255,255,255,.1);
-
-    box-shadow:
-    0 0 40px rgba(0,229,255,.15),
-    0 0 100px rgba(255,255,255,.05);
-}
-
-h1{
-    color:white;
-    font-size:3.5rem;
-
-    margin-bottom:15px;
-
-    text-shadow:
-    0 0 15px white,
-    0 0 30px #00e5ff;
-}
-
-.subtitle{
-    color:#d0d0d0;
-    letter-spacing:2px;
-    margin-bottom:40px;
-    font-size:1.1rem;
-}
-
-.timer{
-    display:flex;
-    justify-content:center;
-    gap:15px;
-    flex-wrap:wrap;
-}
-
-.box{
-    width:120px;
-    padding:20px;
-
-    border-radius:20px;
-
-    background:rgba(255,255,255,.06);
-
-    box-shadow:
-    0 0 20px rgba(0,229,255,.2);
-
-    backdrop-filter:blur(10px);
-}
-
-.number{
-    color:white;
-    font-size:2.5rem;
-    font-weight:700;
-
-    text-shadow:
-    0 0 15px white,
-    0 0 25px #00e5ff;
-}
-
-.label{
-    color:#bdbdbd;
-    font-size:.9rem;
-    letter-spacing:2px;
-}
-
-.secret{
-    margin-top:35px;
-
-    color:#999;
-
-    letter-spacing:5px;
-
-    animation:pulse 2s infinite;
-}
-
-@keyframes pulse{
-    0%,100%{
-        opacity:.4;
-    }
-    50%{
-        opacity:1;
-    }
-}
-
-#message{
-    margin-top:30px;
-    font-size:2rem;
-    color:white;
-}
-
-@media(max-width:700px){
-
-.container{
-    padding:30px;
-}
-
-h1{
-    font-size:2rem;
-}
-
-.box{
-    width:90px;
-}
-
-.number{
-    font-size:1.8rem;
-}
-}
-
-</style>
+        @keyframes scan {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
+        }
+    </style>
 </head>
-
 <body>
+    <!-- Matrix Background (Binary Rain) -->
+    <canvas id="matrix"></canvas>
 
-<div class="glow"></div>
-
-<div class="container">
-
-    <h1>🎁 Something Special is Coming...</h1>
-
-    <div class="subtitle">
-          Dhoirjo rakhen apu ... 
+    <!-- Main Content -->
+    <div class="content">
+        <h1 class="crash-text">
+            <span>SERVER</span>
+            <span>CRASHED</span>
+        </h1>
     </div>
 
-    <div class="timer">
+    <!-- Scanlines -->
+    <div class="scanline"></div>
 
-        <div class="box">
-            <div id="days" class="number">0</div>
-            <div class="label">DAYS</div>
-        </div>
+    <script>
+        // Binary Matrix Rain Effect
+        const canvas = document.getElementById('matrix');
+        const ctx = canvas.getContext('2d');
 
-        <div class="box">
-            <div id="hours" class="number">0</div>
-            <div class="label">HOURS</div>
-        </div>
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
 
-        <div class="box">
-            <div id="minutes" class="number">0</div>
-            <div class="label">MINUTES</div>
-        </div>
+        // Only binary characters: 0 and 1
+        const chars = '01';
+        const fontSize = 16;
+        let columns = Math.floor(canvas.width / fontSize);
+        let drops = Array(columns).fill(1);
 
-        <div class="box">
-            <div id="seconds" class="number">0</div>
-            <div class="label">SECONDS</div>
-        </div>
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    </div>
+            ctx.fillStyle = '#00ff41';
+            ctx.font = fontSize + 'px VT323, monospace';
 
-    <div class="secret">
-        ✨ KEEP WAITING ✨
-    </div>
+            for (let i = 0; i < drops.length; i++) {
+                const text = chars[Math.floor(Math.random() * chars.length)];
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
 
-    <div id="message"></div>
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
 
-</div>
-
-<script>
-
-const targetDate =
-new Date("June 13, 2026 10:30:00").getTime();
-
-const countdown = setInterval(() => {
-
-    const now = new Date().getTime();
-
-    const distance = targetDate - now;
-
-    const days =
-    Math.floor(distance / (1000*60*60*24));
-
-    const hours =
-    Math.floor((distance % (1000*60*60*24))
-    / (1000*60*60));
-
-    const minutes =
-    Math.floor((distance % (1000*60*60))
-    / (1000*60));
-
-    const seconds =
-    Math.floor((distance % (1000*60))
-    / 1000);
-
-    document.getElementById("days").innerHTML = days;
-    document.getElementById("hours").innerHTML = hours;
-    document.getElementById("minutes").innerHTML = minutes;
-    document.getElementById("seconds").innerHTML = seconds;
-
-    if(distance < 0){
-
-        clearInterval(countdown);
-
-        document.querySelector(".timer").style.display =
-        "none";
-
-        document.querySelector(".secret").style.display =
-        "none";
-
-        document.getElementById("message").innerHTML =
-        "💖 The Wait Is Finally Over 💖";
-    }
-
-},1000);
-
-</script>
-
+        setInterval(drawMatrix, 50);
+    </script>
 </body>
 </html>
-
